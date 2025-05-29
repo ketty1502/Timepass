@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timepass</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1e1e2f;
+      color: #f0eae2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-image: radial-gradient(#2c2c3f 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background-color: #2b2b3d;
+      border-radius: 1rem;
+      padding: 2rem;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      text-align: center;
+    }
+
+    .challenge {
+      font-size: 1.2rem;
+      margin: 1rem 0;
+      color: #fdfdfd;
+    }
+
+    .button {
+      margin-top: 1.5rem;
+      background-color: #ffb36b;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 30px;
+      color: #1e1e2f;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #e99a50;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Timepass</h1>
+    <div class="challenge" id="challengeText">
+      Say this tongue twister 3 times fast: <br />
+      <em>“Red lorry, yellow lorry, red lorry, yellow lorry...”</em>
+    </div>
+    <button class="button" onclick="getRandomChallenge()">Show Another</button>
+  </div>
+
+  <footer>New fun every day · Built for cozy boredom breaks</footer>
+
+  <script>
+    const challenges = [
+  "Count backwards from 100 by 7s!",
+  "Say this tongue twister 3 times fast: 'Red lorry, yellow lorry...'",
+  "Draw a monster using only 5 lines!",
+  "Do 10 jumping jacks right now!",
+  "Name 5 things you can see that are blue!",
+  "Try to whistle for 1 full minute!",
+  "Write a 3-line poem about toast!",
+  "Hold a plank for 30 seconds!",
+  "Say the alphabet backwards!",
+  "Imagine a superhero that loves cheese — what’s their name?",
+  "Stand on one leg for 30 seconds without wobbling!",
+  "Make the sound of 5 different animals!",
+  "Draw something using only circles!",
+  "Balance a book on your head and walk 5 steps!",
+  "Try to name all the planets in the solar system!",
+  "Invent a new dance move and name it!",
+  "Look around and find something shaped like a triangle!",
+  "Pretend you’re a robot for 1 minute!",
+  "List 5 things you’re grateful for!",
+  "Mime brushing your teeth — but with your non-dominant hand!",
+  "Say your name backwards!",
+  "Draw a self-portrait with your eyes closed!",
+  "Act out your favorite movie scene!",
+  "Create a handshake with yourself!",
+  "Try not to blink for 20 seconds!",
+  "Pretend to be an alien visiting Earth for the first time!",
+  "Invent a new ice cream flavor and describe it!",
+  "Draw a cat with sunglasses!",
+  "Write a haiku about your socks!",
+  "Name 5 songs that make you happy!",
+  "Close your eyes and describe your surroundings!",
+  "Draw something using only straight lines!",
+  "Pretend to be a news anchor for 30 seconds!",
+  "Make up a 3-line joke!",
+  "Spell your name using objects around you!",
+  "Dance like no one's watching — for 1 minute!",
+  "Draw a snail doing yoga!",
+  "Say 3 compliments to yourself!",
+  "Try to touch your toes without bending your knees!",
+  "Balance something on your head for 15 seconds!",
+  "Make a silly face in the mirror!",
+  "Draw your mood as a weather icon!",
+  "Pretend your hand is a puppet and make it talk!",
+  "Create a new animal by combining two real ones!",
+  "Do a slow-motion walk across the room!",
+  "Make up a word and define it!",
+  "Write a super short story using 5 words!",
+  "Clap 10 times in different rhythms!",
+  "Draw a tree using only dots!",
+  "Look at something and describe it as if you're seeing it for the first time!",
+  "Try to name 10 fruits in 20 seconds!",
+  "Sing the alphabet in a robot voice!",
+  "List as many animals as you can in 30 seconds!",
+  "Act like your favorite cartoon character!",
+  "Make your own superhero pose!",
+  "Write a short love letter to pizza!",
+  "Create a monster using your fingers as legs!",
+  "Do a chair dance for 1 minute!",
+  "Pretend the floor is lava for 10 seconds!",
+  "Try to wink both eyes separately!",
+  "Count from 1 to 20 using a different voice each time!",
+  "Describe your day using only sound effects!",
+  "Draw a flying fish with wings!",
+  "Stare at one object without blinking — how long can you last?",
+  "Make a pattern using random objects nearby!",
+  "Whistle your favorite song (or hum if you can’t whistle)!",
+  "Invent a secret handshake for you and your shadow!",
+  "Try to say 5 words that start and end with the same letter!",
+  "Write a tiny review of the last thing you ate!",
+  "Spell ‘challenge’ backward out loud!",
+  "Write your name in the air using your nose!",
+  "Make up a cheer for brushing teeth!",
+  "Try to name 7 different vegetables!",
+  "Do 5 squats while counting in a pirate voice!",
+  "Draw your favorite food but make it into a character!",
+  "Give a motivational speech to your shoe!",
+  "List 3 things you want to learn!",
+  "Make your favorite animal sound quietly!",
+  "Pretend you're a famous artist drawing your next masterpiece!",
+  "Make a tiny sculpture out of paper or trash nearby!",
+  "Describe your dream vacation in 10 seconds!",
+  "Name 3 things you’d bring to the moon!",
+  "Draw a rocket ship with a banana as fuel!",
+  "Pretend your hands are puppets and make them argue about cake!",
+  "Say your favorite color 10 times fast!",
+  "Pretend you're an ant and describe your day!",
+  "Try to walk across the room with your eyes closed (safely)!",
+  "Name all the colors you can think of in 15 seconds!",
+  "Write your favorite animal’s diary entry for today!",
+  "Try to balance a pencil on your finger for 20 seconds!",
+  "Count your steps to the nearest window or door!",
+  "Pretend to be your own pet for a minute!",
+  "Invent a new kind of pizza topping!",
+  "Make a commercial for the last object you touched!",
+  "Write a recipe for an invisible soup!",
+  "List 5 things that make you smile!",
+  "Draw a ghost that’s afraid of humans!",
+  "Sing your favorite emoji!",
+  "Act like a popcorn kernel in the microwave!",
+  "Whisper a secret message to your elbow!",
+  "Draw a snail winning a race!",
+  "Make up a weather forecast for your mood!",
+  "Pretend you're calling your favorite cartoon character!",
+  "Try to make your own tongue twister!",
+  "Invent a new holiday and explain how it’s celebrated!",
+  "Draw a pizza that’s also a spaceship!",
+  "Say ‘hello’ in 5 different languages (or make up some!)"
+];
+
+
+    function getRandomChallenge() {
+      const random = Math.floor(Math.random() * challenges.length);
+      document.getElementById("challengeText").innerHTML = challenges[random];
+    }
+  </script>
+</body>
+</html>
